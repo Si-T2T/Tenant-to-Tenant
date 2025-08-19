@@ -81,7 +81,7 @@ if (-not (Test-Path -Path $Template)) {
 Write-Host "The file" $Template "exists. Continuing with the script..." -ForegroundColor Green
 
 if (-not (Test-Path -Path .\CSVFiles)) {
-    Write-Host "The Folder" $Template "does not exist. Creating folder" -ForegroundColor Yellow
+    Write-Host "The Folder" \CSVFiles "does not exist. Creating folder" -ForegroundColor Yellow
     New-Item -Name "CSVFiles" -ItemType "directory"
 }
 Else {
@@ -94,16 +94,14 @@ $Consultant | Out-File .\CSVFiles\Consultant.txt
 
 #endregion Variables and Template Check
 
-#region Graph Stuff
-
-#endregion Graph Stuff
+# Start the PowerShell scripts in sequence with a delay to ensure each script has time to complete before the next starts
 
 Start-Process pwsh -ArgumentList "-NoProfile -File .\MGGraph.ps1"
-Sleep 30
+Sleep 60
 Start-Process pwsh -ArgumentList "-NoProfile -File .\EXOBootStrapper.ps1"
-Sleep 30
+Sleep 60
 Start-Process pwsh -ArgumentList "-NoProfile -File .\Teams.ps1"
-Sleep 30
+Sleep 60
 Start-Process pwsh -ArgumentList "-NoProfile -File .\SPOnline.ps1"
 
 While (!(Test-Path .\csvfiles\AllMGUsers.csv -ErrorAction SilentlyContinue))
