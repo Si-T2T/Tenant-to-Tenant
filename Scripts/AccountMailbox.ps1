@@ -4,6 +4,21 @@ Write-Host "Running" $Script $Version -ForegroundColor Green
 
 Connect-ExchangeOnline -DisableWAM
 
+Write-Host "Getting Accepted Domains" -ForegroundColor Green
+
+$AcceptedDomains = Get-AcceptedDomain | Sort-Object ascending
+
+Write-Host
+$OnMicrosoftDomain = $AcceptedDomains| Where-Object { $_.DomainName -like "*.onmicrosoft.com" } | Select-Object DomainName -ExpandProperty DomainName
+        $OnMicrosoftPrefix = $OnMicrosoftDomain.split('.')[0] 
+        $AdminURL = "https://" + $OnMicrosoftPrefix + "-admin.sharepoint.com"
+$AdminURL | Out-File .\CSVFiles\AdminURL.txt
+
+$CustomDomains = $AcceptedDomains| Where-Object { $_.DomainName -notlike "*.onmicrosoft.com" } 
+$CustomDomains | Export-csv .\CSVFiles\CustomDomains.csv -NoTypeInformation
+
+Write-Host "Getting Mailboxes" -ForegroundColor Green
+
 $AllMailboxes = @()
 $AllMailboxes = Get-Mailbox -ResultSize Unlimited | Where-Object { $_.PrimarySMTPAddress -notLike "DiscoverySearchMailbox*" } | Sort-Object UserPrincipalname
 

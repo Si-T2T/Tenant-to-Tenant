@@ -4,6 +4,8 @@ Write-Host "Running" $Script $Version -ForegroundColor Green
 
 Connect-ExchangeOnline -DisableWAM
 
+Write-Host "Getting Microsoft 365 Groups" -ForegroundColor Green
+
 $UnifiedGroups = @()
 $UnifiedGroups = Get-UnifiedGroup -ResultSize Unlimited | Sort-Object DisplayName
 
@@ -29,6 +31,7 @@ Start-Sleep 5
 
 
 Write-Host "Unified Group Data Exported" -ForegroundColor Green
+Write-Host "Getting Microsoft 365 Group Mailbox Data" -ForegroundColor Green
 
 $UnifiedGroupMailboxesArray = @()
 $i = 1

@@ -97,11 +97,11 @@ $Consultant | Out-File .\CSVFiles\Consultant.txt
 # Start the PowerShell scripts in sequence with a delay to ensure each script has time to complete before the next starts
 
 Start-Process pwsh -ArgumentList "-NoProfile -File .\MGGraph.ps1"
-Sleep 60
+Sleep 120
 Start-Process pwsh -ArgumentList "-NoProfile -File .\EXOBootStrapper.ps1"
-Sleep 60
+Sleep 120
 Start-Process pwsh -ArgumentList "-NoProfile -File .\Teams.ps1"
-Sleep 60
+Sleep 120
 Start-Process pwsh -ArgumentList "-NoProfile -File .\SPOnline.ps1"
 
 While (!(Test-Path .\csvfiles\AllMGUsers.csv -ErrorAction SilentlyContinue))
