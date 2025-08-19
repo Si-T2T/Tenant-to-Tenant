@@ -132,13 +132,10 @@ While (!(Test-Path .\csvfiles\OneDrives.csv -ErrorAction SilentlyContinue))
 {
   # endless loop, when the file will be there, it will continue
 }
-While (!(Test-Path .\csvfiles\SPOnline.csv -ErrorAction SilentlyContinue))
+While (!(Test-Path .\csvfiles\SPOSites.csv -ErrorAction SilentlyContinue))
 {
   # endless loop, when the file will be there, it will continue
 }
-
-
-
 
 
 Write-Host "Script Complete, good knob" $Consultant
