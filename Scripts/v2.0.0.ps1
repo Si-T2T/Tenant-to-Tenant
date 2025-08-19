@@ -73,20 +73,21 @@ $TemplateVersion = "2.0.0"
 $Template = ""
 $Template = "Template_" + $TemplateVersion + ".xlsx"
 
-if (-not (Test-Path -Path .\CSVFiles)) {
-    Write-Host "The Folder" $Template "does not exist. Creating folder" -ForegroundColor Yellow
-    New-Item -Name "CSVFiles" -ItemType "directory"
-}
-Else {
-        Write-Host "Folder CSVFiles exists. Continuing....." -ForegroundColor Green
-        }
-
 # Check if the Template exists
 if (-not (Test-Path -Path $Template)) {
     Write-Host "The file" $Template "does not exist. Ensure the template is in the working directory and restert the script" -ForegroundColor Red
     Break
 }
 Write-Host "The file" $Template "exists. Continuing with the script..." -ForegroundColor Green
+
+if (-not (Test-Path -Path .\CSVFiles)) {
+    Write-Host "The Folder" $Template "does not exist. Creating folder" -ForegroundColor Yellow
+    New-Item -Name "CSVFiles" -ItemType "directory"
+}
+Else {
+        Write-Host "Folder CSVFiles exists. Continuing....." -ForegroundColor Green
+}
+
 
 $Consultant = Read-Host "Please Enter Your Name and press Enter"
 $Consultant | Out-File .\CSVFiles\Consultant.txt
