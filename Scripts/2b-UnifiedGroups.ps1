@@ -19,7 +19,7 @@ foreach ($UnifiedGroup in $UnifiedGroups) {
         DisplayName            = $UnifiedGroup.DisplayName ;
         AccessType             = $UnifiedGroup.AccessType ;
         PrimarySmtpAddress     = $UnifiedGroup.PrimarySmtpAddress ;
-        GroupID                = $UnifiedGroup.GroupID ;
+        GroupID                = $UnifiedGroup.ExternalDirectoryObjectId ;
         SharePointSiteURL      = $UnifiedGroup.SharePointSiteURL 
     }
     $i++

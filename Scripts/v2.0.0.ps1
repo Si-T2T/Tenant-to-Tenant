@@ -81,11 +81,13 @@ if (-not (Test-Path -Path $Template)) {
 Write-Host "The file" $Template "exists. Continuing with the script..." -ForegroundColor Green
 
 if (-not (Test-Path -Path .\CSVFiles)) {
-    Write-Host "The Folder" \CSVFiles "does not exist. Creating folder" -ForegroundColor Yellow
+    Write-Host "The Folder" \CSVFiles "does not exist. Creating folder" -ForegroundColor Red
     New-Item -Name "CSVFiles" -ItemType "directory"
 }
 Else {
-        Write-Host "Folder CSVFiles exists. Continuing....." -ForegroundColor Green
+        Write-Host "Folder CSVFiles exists. Files in this folder will be overwritten!" -ForegroundColor Yellow
+        Write-Host "Please renanme or delete the folder and rerun the script" -ForegroundColor Yellow
+        Break
 }
 
 
@@ -95,14 +97,17 @@ $Consultant | Out-File .\CSVFiles\Consultant.txt
 #endregion Variables and Template Check
 
 # Start the PowerShell scripts in sequence with a delay to ensure each script has time to complete before the next starts
-
-Start-Process pwsh -ArgumentList "-NoProfile -File .\MGGraph.ps1"
+Write-Host "Starting Script 1-MGGraph.ps1" -ForegroundColor Green
+Start-Process pwsh -ArgumentList "-NoProfile -File .\1-MGGraph.ps1"
 Sleep 120
-Start-Process pwsh -ArgumentList "-NoProfile -File .\EXOBootStrapper.ps1"
+Write-Host "Starting Script 2-EXOBootStrapper.ps1" -ForegroundColor Green
+Start-Process pwsh -ArgumentList "-NoProfile -File .\2-EXOBootStrapper.ps1"
 Sleep 120
-Start-Process pwsh -ArgumentList "-NoProfile -File .\Teams.ps1"
+Write-Host "Starting Script 3-Teams.ps1" -ForegroundColor Green
+Start-Process pwsh -ArgumentList "-NoProfile -File .\3-Teams.ps1"
 Sleep 120
-Start-Process pwsh -ArgumentList "-NoProfile -File .\SPOnline.ps1"
+Write-Host "Starting Script 4-SPOnline.ps1" -ForegroundColor Green
+Start-Process pwsh -ArgumentList "-NoProfile -File .\4-SPOnline.ps1"
 
 While (!(Test-Path .\csvfiles\AllMGUsers.csv -ErrorAction SilentlyContinue))
 {

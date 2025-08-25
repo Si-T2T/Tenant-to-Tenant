@@ -8,11 +8,15 @@ Write-Host "Getting Accepted Domains" -ForegroundColor Green
 
 $AcceptedDomains = Get-AcceptedDomain | Sort-Object ascending
 
-Write-Host
+Write-Host "Exporting SharePoint Admin URL for later script"  -ForegroundColor Green
+
 $OnMicrosoftDomain = $AcceptedDomains| Where-Object { $_.DomainName -like "*.onmicrosoft.com" } | Select-Object DomainName -ExpandProperty DomainName
         $OnMicrosoftPrefix = $OnMicrosoftDomain.split('.')[0] 
         $AdminURL = "https://" + $OnMicrosoftPrefix + "-admin.sharepoint.com"
 $AdminURL | Out-File .\CSVFiles\AdminURL.txt
+
+
+Write-Host "Exporting Custom Domains for later script"  -ForegroundColor Green
 
 $CustomDomains = $AcceptedDomains| Where-Object { $_.DomainName -notlike "*.onmicrosoft.com" } 
 $CustomDomains | Export-csv .\CSVFiles\CustomDomains.csv -NoTypeInformation
