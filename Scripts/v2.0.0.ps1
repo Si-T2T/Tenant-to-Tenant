@@ -73,14 +73,6 @@ $TemplateVersion = "2.0.0"
 $Template = ""
 $Template = "Template_" + $TemplateVersion + ".xlsx"
 
-if (-not (Test-Path -Path .\CSVFiles)) {
-    Write-Host "The Folder" $Template "does not exist. Creating folder" -ForegroundColor Yellow
-    New-Item -Name "CSVFiles" -ItemType "directory"
-}
-Else {
-        Write-Host "Folder CSVFiles exists. Continuing....." -ForegroundColor Green
-        }
-
 # Check if the Template exists
 if (-not (Test-Path -Path $Template)) {
     Write-Host "The file" $Template "does not exist. Ensure the template is in the working directory and restert the script" -ForegroundColor Red
@@ -88,21 +80,28 @@ if (-not (Test-Path -Path $Template)) {
 }
 Write-Host "The file" $Template "exists. Continuing with the script..." -ForegroundColor Green
 
+if (-not (Test-Path -Path .\CSVFiles)) {
+    Write-Host "The Folder" \CSVFiles "does not exist. Creating folder" -ForegroundColor Yellow
+    New-Item -Name "CSVFiles" -ItemType "directory"
+}
+Else {
+        Write-Host "Folder CSVFiles exists. Continuing....." -ForegroundColor Green
+}
+
+
 $Consultant = Read-Host "Please Enter Your Name and press Enter"
 $Consultant | Out-File .\CSVFiles\Consultant.txt
 
 #endregion Variables and Template Check
 
-#region Graph Stuff
-
-#endregion Graph Stuff
+# Start the PowerShell scripts in sequence with a delay to ensure each script has time to complete before the next starts
 
 Start-Process pwsh -ArgumentList "-NoProfile -File .\MGGraph.ps1"
-Sleep 30
+Sleep 120
 Start-Process pwsh -ArgumentList "-NoProfile -File .\EXOBootStrapper.ps1"
-Sleep 30
+Sleep 120
 Start-Process pwsh -ArgumentList "-NoProfile -File .\Teams.ps1"
-Sleep 30
+Sleep 120
 Start-Process pwsh -ArgumentList "-NoProfile -File .\SPOnline.ps1"
 
 While (!(Test-Path .\csvfiles\AllMGUsers.csv -ErrorAction SilentlyContinue))
@@ -133,13 +132,10 @@ While (!(Test-Path .\csvfiles\OneDrives.csv -ErrorAction SilentlyContinue))
 {
   # endless loop, when the file will be there, it will continue
 }
-While (!(Test-Path .\csvfiles\SPOnline.csv -ErrorAction SilentlyContinue))
+While (!(Test-Path .\csvfiles\SPOSites.csv -ErrorAction SilentlyContinue))
 {
   # endless loop, when the file will be there, it will continue
 }
-
-
-
 
 
 Write-Host "Script Complete, good knob" $Consultant

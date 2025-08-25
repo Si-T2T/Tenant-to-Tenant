@@ -2,6 +2,9 @@
 $Version = "v2.0.0"
 Write-Host "Running" $Script $Version -ForegroundColor Green
 
+Disconnect-MgGraph -ErrorAction SilentlyContinue
+Disconnect-msgraph -ErrorAction SilentlyContinue
+Write-Host "Connecting to Microsoft Graph" -ForegroundColor Green
 $Scope = @{
     Scopes = @(
         "Application.Read.All",
